@@ -1,0 +1,410 @@
+{
+  "model_type": "logistic_regression",
+  "trained_on": "2008-04-18 to 2024-05-26",
+  "n_matches": 1076,
+  "test_accuracy": 0.543,
+  "test_roc_auc": 0.5516,
+  "features": [
+    "win_rate_diff",
+    "form_diff",
+    "h2h_diff",
+    "toss_won",
+    "bats_first",
+    "home_advantage"
+  ],
+  "coefficients": {
+    "win_rate_diff": 0.515988,
+    "form_diff": 0.147819,
+    "h2h_diff": 0.029267,
+    "toss_won": -0.011188,
+    "bats_first": -0.187089,
+    "home_advantage": 0.198126
+  },
+  "teams": [
+    "Chennai Super Kings",
+    "Deccan Chargers",
+    "Delhi Capitals",
+    "Gujarat Lions",
+    "Gujarat Titans",
+    "Kochi Tuskers Kerala",
+    "Kolkata Knight Riders",
+    "Lucknow Super Giants",
+    "Mumbai Indians",
+    "Pune Warriors",
+    "Punjab Kings",
+    "Rajasthan Royals",
+    "Rising Pune Supergiant",
+    "Royal Challengers Bengaluru",
+    "Sunrisers Hyderabad"
+  ],
+  "team_stats": {
+    "Chennai Super Kings": {
+      "played": 236,
+      "win_rate": 0.5847,
+      "form": 0.5,
+      "active": true
+    },
+    "Deccan Chargers": {
+      "played": 75,
+      "win_rate": 0.3867,
+      "form": 0.4,
+      "active": false
+    },
+    "Delhi Capitals": {
+      "played": 246,
+      "win_rate": 0.4553,
+      "form": 0.6,
+      "active": true
+    },
+    "Gujarat Lions": {
+      "played": 29,
+      "win_rate": 0.4483,
+      "form": 0.3,
+      "active": false
+    },
+    "Gujarat Titans": {
+      "played": 45,
+      "win_rate": 0.6222,
+      "form": 0.4,
+      "active": true
+    },
+    "Kochi Tuskers Kerala": {
+      "played": 14,
+      "win_rate": 0.4286,
+      "form": 0.4,
+      "active": false
+    },
+    "Kolkata Knight Riders": {
+      "played": 247,
+      "win_rate": 0.5263,
+      "form": 0.8,
+      "active": true
+    },
+    "Lucknow Super Giants": {
+      "played": 43,
+      "win_rate": 0.5581,
+      "form": 0.4,
+      "active": true
+    },
+    "Mumbai Indians": {
+      "played": 257,
+      "win_rate": 0.5525,
+      "form": 0.3,
+      "active": true
+    },
+    "Pune Warriors": {
+      "played": 45,
+      "win_rate": 0.2667,
+      "form": 0.2,
+      "active": false
+    },
+    "Punjab Kings": {
+      "played": 242,
+      "win_rate": 0.4504,
+      "form": 0.3,
+      "active": true
+    },
+    "Rajasthan Royals": {
+      "played": 216,
+      "win_rate": 0.5093,
+      "form": 0.5,
+      "active": true
+    },
+    "Rising Pune Supergiant": {
+      "played": 30,
+      "win_rate": 0.5,
+      "form": 0.7,
+      "active": false
+    },
+    "Royal Challengers Bengaluru": {
+      "played": 249,
+      "win_rate": 0.4859,
+      "form": 0.6,
+      "active": true
+    },
+    "Sunrisers Hyderabad": {
+      "played": 178,
+      "win_rate": 0.4888,
+      "form": 0.5,
+      "active": true
+    }
+  },
+  "h2h_wins": {
+    "Chennai Super Kings": {
+      "Punjab Kings": 16,
+      "Mumbai Indians": 17,
+      "Kolkata Knight Riders": 19,
+      "Royal Challengers Bengaluru": 21,
+      "Delhi Capitals": 19,
+      "Deccan Chargers": 6,
+      "Rajasthan Royals": 16,
+      "Pune Warriors": 4,
+      "Kochi Tuskers Kerala": 1,
+      "Sunrisers Hyderabad": 15,
+      "Lucknow Super Giants": 1,
+      "Gujarat Titans": 3
+    },
+    "Deccan Chargers": {
+      "Mumbai Indians": 4,
+      "Chennai Super Kings": 4,
+      "Kolkata Knight Riders": 2,
+      "Royal Challengers Bengaluru": 6,
+      "Rajasthan Royals": 2,
+      "Delhi Capitals": 4,
+      "Punjab Kings": 3,
+      "Kochi Tuskers Kerala": 1,
+      "Pune Warriors": 3
+    },
+    "Delhi Capitals": {
+      "Rajasthan Royals": 14,
+      "Deccan Chargers": 7,
+      "Royal Challengers Bengaluru": 11,
+      "Chennai Super Kings": 11,
+      "Mumbai Indians": 16,
+      "Punjab Kings": 15,
+      "Kolkata Knight Riders": 14,
+      "Pune Warriors": 3,
+      "Kochi Tuskers Kerala": 1,
+      "Sunrisers Hyderabad": 10,
+      "Gujarat Lions": 3,
+      "Rising Pune Supergiant": 2,
+      "Gujarat Titans": 3,
+      "Lucknow Super Giants": 2
+    },
+    "Gujarat Lions": {
+      "Punjab Kings": 2,
+      "Rising Pune Supergiant": 3,
+      "Mumbai Indians": 2,
+      "Royal Challengers Bengaluru": 2,
+      "Delhi Capitals": 1,
+      "Kolkata Knight Riders": 3
+    },
+    "Gujarat Titans": {
+      "Lucknow Super Giants": 4,
+      "Delhi Capitals": 2,
+      "Punjab Kings": 3,
+      "Rajasthan Royals": 5,
+      "Chennai Super Kings": 4,
+      "Kolkata Knight Riders": 2,
+      "Sunrisers Hyderabad": 3,
+      "Royal Challengers Bengaluru": 2,
+      "Mumbai Indians": 3
+    },
+    "Kochi Tuskers Kerala": {
+      "Mumbai Indians": 1,
+      "Chennai Super Kings": 1,
+      "Kolkata Knight Riders": 2,
+      "Delhi Capitals": 1,
+      "Rajasthan Royals": 1
+    },
+    "Kolkata Knight Riders": {
+      "Royal Challengers Bengaluru": 20,
+      "Deccan Chargers": 7,
+      "Delhi Capitals": 18,
+      "Punjab Kings": 21,
+      "Chennai Super Kings": 10,
+      "Rajasthan Royals": 14,
+      "Mumbai Indians": 11,
+      "Pune Warriors": 4,
+      "Sunrisers Hyderabad": 18,
+      "Rising Pune Supergiant": 3,
+      "Gujarat Lions": 1,
+      "Gujarat Titans": 1,
+      "Lucknow Super Giants": 2
+    },
+    "Lucknow Super Giants": {
+      "Chennai Super Kings": 3,
+      "Sunrisers Hyderabad": 3,
+      "Delhi Capitals": 3,
+      "Mumbai Indians": 5,
+      "Punjab Kings": 3,
+      "Kolkata Knight Riders": 3,
+      "Royal Challengers Bengaluru": 2,
+      "Rajasthan Royals": 1,
+      "Gujarat Titans": 1
+    },
+    "Mumbai Indians": {
+      "Kolkata Knight Riders": 23,
+      "Delhi Capitals": 19,
+      "Rajasthan Royals": 15,
+      "Chennai Super Kings": 20,
+      "Deccan Chargers": 6,
+      "Royal Challengers Bengaluru": 19,
+      "Punjab Kings": 17,
+      "Pune Warriors": 5,
+      "Sunrisers Hyderabad": 12,
+      "Rising Pune Supergiant": 2,
+      "Gujarat Lions": 1,
+      "Gujarat Titans": 2,
+      "Lucknow Super Giants": 1
+    },
+    "Pune Warriors": {
+      "Punjab Kings": 3,
+      "Kochi Tuskers Kerala": 1,
+      "Deccan Chargers": 1,
+      "Mumbai Indians": 1,
+      "Chennai Super Kings": 2,
+      "Delhi Capitals": 2,
+      "Rajasthan Royals": 1,
+      "Kolkata Knight Riders": 1
+    },
+    "Punjab Kings": {
+      "Mumbai Indians": 14,
+      "Delhi Capitals": 17,
+      "Deccan Chargers": 7,
+      "Kolkata Knight Riders": 12,
+      "Royal Challengers Bengaluru": 17,
+      "Rajasthan Royals": 11,
+      "Chennai Super Kings": 13,
+      "Kochi Tuskers Kerala": 1,
+      "Pune Warriors": 3,
+      "Sunrisers Hyderabad": 7,
+      "Rising Pune Supergiant": 2,
+      "Gujarat Lions": 2,
+      "Gujarat Titans": 2,
+      "Lucknow Super Giants": 1
+    },
+    "Rajasthan Royals": {
+      "Punjab Kings": 16,
+      "Deccan Chargers": 7,
+      "Royal Challengers Bengaluru": 14,
+      "Kolkata Knight Riders": 12,
+      "Chennai Super Kings": 13,
+      "Delhi Capitals": 15,
+      "Mumbai Indians": 14,
+      "Kochi Tuskers Kerala": 1,
+      "Pune Warriors": 4,
+      "Sunrisers Hyderabad": 9,
+      "Lucknow Super Giants": 4,
+      "Gujarat Titans": 1
+    },
+    "Rising Pune Supergiant": {
+      "Mumbai Indians": 4,
+      "Sunrisers Hyderabad": 3,
+      "Delhi Capitals": 2,
+      "Punjab Kings": 2,
+      "Royal Challengers Bengaluru": 2,
+      "Gujarat Lions": 1,
+      "Kolkata Knight Riders": 1
+    },
+    "Royal Challengers Bengaluru": {
+      "Mumbai Indians": 13,
+      "Deccan Chargers": 5,
+      "Chennai Super Kings": 11,
+      "Rajasthan Royals": 15,
+      "Kolkata Knight Riders": 14,
+      "Punjab Kings": 16,
+      "Delhi Capitals": 18,
+      "Kochi Tuskers Kerala": 2,
+      "Pune Warriors": 5,
+      "Sunrisers Hyderabad": 11,
+      "Rising Pune Supergiant": 2,
+      "Gujarat Lions": 3,
+      "Lucknow Super Giants": 3,
+      "Gujarat Titans": 3
+    },
+    "Sunrisers Hyderabad": {
+      "Pune Warriors": 2,
+      "Delhi Capitals": 13,
+      "Punjab Kings": 16,
+      "Mumbai Indians": 10,
+      "Rajasthan Royals": 11,
+      "Kolkata Knight Riders": 9,
+      "Royal Challengers Bengaluru": 12,
+      "Chennai Super Kings": 6,
+      "Gujarat Lions": 5,
+      "Rising Pune Supergiant": 1,
+      "Gujarat Titans": 1,
+      "Lucknow Super Giants": 1
+    }
+  },
+  "team_home_cities": {
+    "Chennai Super Kings": [
+      "Chennai"
+    ],
+    "Delhi Capitals": [
+      "Delhi"
+    ],
+    "Gujarat Titans": [
+      "Ahmedabad"
+    ],
+    "Kolkata Knight Riders": [
+      "Kolkata"
+    ],
+    "Lucknow Super Giants": [
+      "Lucknow"
+    ],
+    "Mumbai Indians": [
+      "Mumbai"
+    ],
+    "Punjab Kings": [
+      "Chandigarh",
+      "Dharamsala",
+      "Mohali"
+    ],
+    "Rajasthan Royals": [
+      "Jaipur"
+    ],
+    "Royal Challengers Bengaluru": [
+      "Bangalore",
+      "Bengaluru"
+    ],
+    "Sunrisers Hyderabad": [
+      "Hyderabad"
+    ],
+    "Deccan Chargers": [
+      "Hyderabad"
+    ],
+    "Gujarat Lions": [
+      "Rajkot"
+    ],
+    "Kochi Tuskers Kerala": [
+      "Kochi"
+    ],
+    "Pune Warriors": [
+      "Pune"
+    ],
+    "Rising Pune Supergiant": [
+      "Pune"
+    ]
+  },
+  "cities": [
+    "Abu Dhabi",
+    "Ahmedabad",
+    "Bangalore",
+    "Bengaluru",
+    "Bloemfontein",
+    "Cape Town",
+    "Centurion",
+    "Chandigarh",
+    "Chennai",
+    "Cuttack",
+    "Delhi",
+    "Dharamsala",
+    "Dubai",
+    "Durban",
+    "East London",
+    "Guwahati",
+    "Hyderabad",
+    "Indore",
+    "Jaipur",
+    "Johannesburg",
+    "Kanpur",
+    "Kimberley",
+    "Kochi",
+    "Kolkata",
+    "Lucknow",
+    "Mohali",
+    "Mumbai",
+    "Nagpur",
+    "Navi Mumbai",
+    "Port Elizabeth",
+    "Pune",
+    "Raipur",
+    "Rajkot",
+    "Ranchi",
+    "Sharjah",
+    "Visakhapatnam"
+  ],
+  "form_window": 10
+}
