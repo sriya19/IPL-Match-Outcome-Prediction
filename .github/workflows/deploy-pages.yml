@@ -1,5 +1,9 @@
 name: Deploy predictor to GitHub Pages
 
+# Publishes docs/ to the gh-pages branch, which GitHub Pages serves.
+# This avoids the Pages REST API, which the default GITHUB_TOKEN cannot
+# use to create the site.
+
 on:
   push:
     branches: [main, "claude/friendly-einstein-ff5zwv"]
@@ -7,9 +11,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
   group: pages
@@ -18,19 +20,19 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
-      - name: Upload site
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Publish docs/ to gh-pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin gh-pages || true
+          git checkout --orphan publish
+          git rm -rf -q .
+          git checkout ${{ github.sha }} -- docs
+          mv docs/* .
+          rmdir docs
+          touch .nojekyll
+          git add -A
+          git commit -m "Deploy site from ${{ github.sha }}"
+          git push origin publish:gh-pages --force
