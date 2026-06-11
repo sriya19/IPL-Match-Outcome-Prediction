@@ -1,0 +1,51 @@
+{
+  "logistic_regression_compact": {
+    "best_params": {
+      "C": 0.3
+    },
+    "fold_accuracy": [
+      0.5981,
+      0.5741,
+      0.5981,
+      0.4537,
+      0.4907
+    ],
+    "mean_accuracy": 0.543,
+    "mean_roc_auc": 0.5516,
+    "mean_log_loss": 0.6907
+  },
+  "logistic_regression_full": {
+    "best_params": {
+      "C": 0.1
+    },
+    "fold_accuracy": [
+      0.6262,
+      0.6111,
+      0.5421,
+      0.4722,
+      0.5
+    ],
+    "mean_accuracy": 0.5503,
+    "mean_roc_auc": 0.5407,
+    "mean_log_loss": 0.6942
+  },
+  "random_forest": {
+    "best_params": {
+      "max_depth": 3,
+      "min_samples_leaf": 4,
+      "n_estimators": 400
+    },
+    "fold_accuracy": [
+      0.5888,
+      0.5741,
+      0.5234,
+      0.463,
+      0.4815
+    ],
+    "mean_accuracy": 0.5261,
+    "mean_roc_auc": 0.5465,
+    "mean_log_loss": 0.6935
+  },
+  "deployed_model": "logistic_regression_compact (refit on full history)",
+  "n_matches": 1076
+}

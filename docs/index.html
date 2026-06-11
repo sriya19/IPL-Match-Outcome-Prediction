@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPL Match Outcome Predictor</title>
+<style>
+  :root {
+    --bg: #0b1220;
+    --panel: #131c2e;
+    --panel-2: #1a2540;
+    --text: #e8eefb;
+    --muted: #93a4c3;
+    --accent: #f5a623;
+    --team-a: #4da3ff;
+    --team-b: #ff6b6b;
+    --border: #25334f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: radial-gradient(1200px 600px at 70% -10%, #1b2a4a 0%, var(--bg) 55%);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 32px 16px 64px;
+  }
+  .container { max-width: 880px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 28px; }
+  header h1 { font-size: 1.9rem; letter-spacing: .5px; }
+  header h1 span { color: var(--accent); }
+  header p { color: var(--muted); margin-top: 8px; font-size: .95rem; }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+  label { display: block; font-size: .8rem; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .8px; }
+  select {
+    width: 100%; padding: 10px 12px; border-radius: 8px;
+    background: var(--panel-2); color: var(--text);
+    border: 1px solid var(--border); font-size: .95rem;
+  }
+  .field { margin-bottom: 4px; }
+  button {
+    width: 100%; margin-top: 18px; padding: 13px;
+    background: linear-gradient(135deg, var(--accent), #e0801f);
+    color: #14181f; font-weight: 700; font-size: 1rem;
+    border: none; border-radius: 9px; cursor: pointer;
+    transition: transform .08s ease;
+  }
+  button:hover { transform: translateY(-1px); }
+  .error { color: #ff8585; margin-top: 12px; font-size: .9rem; display: none; }
+  #result { display: none; }
+  .versus { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 10px; gap: 8px; flex-wrap: wrap; }
+  .versus .a { color: var(--team-a); } .versus .b { color: var(--team-b); }
+  .bar {
+    display: flex; height: 38px; border-radius: 9px; overflow: hidden;
+    border: 1px solid var(--border); font-weight: 700; font-size: .95rem;
+  }
+  .bar .a { background: var(--team-a); color: #07203a; display: flex; align-items: center; padding-left: 12px; min-width: 64px; transition: width .5s ease; }
+  .bar .b { background: var(--team-b); color: #3a0707; display: flex; align-items: center; justify-content: flex-end; padding-right: 12px; flex: 1; }
+  .verdict { text-align: center; margin: 16px 0 4px; font-size: 1.05rem; }
+  .verdict strong { color: var(--accent); }
+  details { margin-top: 16px; }
+  summary { cursor: pointer; color: var(--muted); font-size: .9rem; }
+  table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: .88rem; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; }
+  td.num { font-variant-numeric: tabular-nums; text-align: right; }
+  .pos { color: #7ee2a8; } .neg { color: #ff9a9a; }
+  footer { text-align: center; color: var(--muted); font-size: .82rem; margin-top: 28px; line-height: 1.6; }
+  footer a { color: var(--accent); }
+  .meta { font-size: .82rem; color: var(--muted); margin-top: 10px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🏏 IPL <span>Match Outcome</span> Predictor</h1>
+    <p>Logistic-regression model trained on every IPL match from 2008&ndash;2024 (AIT 582 &middot; Team 4)</p>
+  </header>
+
+  <div class="card">
+    <div class="grid">
+      <div class="field">
+        <label for="teamA">Team A</label>
+        <select id="teamA"></select>
+      </div>
+      <div class="field">
+        <label for="teamB">Team B</label>
+        <select id="teamB"></select>
+      </div>
+      <div class="field">
+        <label for="city">Match city</label>
+        <select id="city"></select>
+      </div>
+      <div class="field">
+        <label for="tossWinner">Toss won by</label>
+        <select id="tossWinner"></select>
+      </div>
+      <div class="field">
+        <label for="tossDecision">Toss decision</label>
+        <select id="tossDecision">
+          <option value="bat">Bat first</option>
+          <option value="field">Field first</option>
+        </select>
+      </div>
+    </div>
+    <button id="predictBtn">Predict winner</button>
+    <div class="error" id="error"></div>
+  </div>
+
+  <div class="card" id="result">
+    <div class="versus"><span class="a" id="nameA"></span><span class="b" id="nameB"></span></div>
+    <div class="bar">
+      <div class="a" id="barA">50%</div>
+      <div class="b" id="barB">50%</div>
+    </div>
+    <p class="verdict" id="verdict"></p>
+    <details>
+      <summary>How the model arrived at this (feature contributions)</summary>
+      <table>
+        <thead><tr><th>Feature</th><th>Value</th><th>Coefficient</th><th>Log-odds</th></tr></thead>
+        <tbody id="contribBody"></tbody>
+      </table>
+    </details>
+    <p class="meta" id="modelMeta"></p>
+  </div>
+
+  <footer>
+    Model: regularized logistic regression over leakage-free rolling features
+    (team win rate, recent form, head-to-head record, toss, batting order, home advantage).<br>
+    Honest chronological backtest accuracy is &asymp;54&ndash;55% &mdash; pre-match IPL outcomes are close to a coin flip, so treat this as a probability estimate, not a guarantee.<br>
+    Data: <a href="https://www.kaggle.com/datasets/patrickb1912/ipl-complete-dataset-20082020" target="_blank" rel="noopener">IPL Complete Dataset (Kaggle)</a> &middot;
+    Code &amp; paper: <a href="https://github.com/sriya19/IPL-Match-Outcome-Prediction" target="_blank" rel="noopener">GitHub repository</a>
+  </footer>
+</div>
+
+<script>
+let MODEL = null;
+
+const FEATURE_LABELS = {
+  win_rate_diff: "Career win-rate edge",
+  form_diff: "Recent form edge (last 10)",
+  h2h_diff: "Head-to-head edge",
+  toss_won: "Won the toss",
+  bats_first: "Bats first",
+  home_advantage: "Home advantage",
+};
+
+async function init() {
+  const res = await fetch("model.json");
+  MODEL = await res.json();
+
+  const teams = MODEL.teams.slice().sort((a, b) => {
+    const act = t => MODEL.team_stats[t].active ? 0 : 1;
+    return act(a) - act(b) || a.localeCompare(b);
+  });
+  const active = teams.filter(t => MODEL.team_stats[t].active);
+  const defunct = teams.filter(t => !MODEL.team_stats[t].active);
+
+  for (const id of ["teamA", "teamB"]) {
+    const sel = document.getElementById(id);
+    const gActive = document.createElement("optgroup");
+    gActive.label = "Current franchises";
+    active.forEach(t => gActive.appendChild(new Option(t, t)));
+    sel.appendChild(gActive);
+    const gOld = document.createElement("optgroup");
+    gOld.label = "Former franchises";
+    defunct.forEach(t => gOld.appendChild(new Option(t, t)));
+    sel.appendChild(gOld);
+  }
+  document.getElementById("teamA").value = active[0];
+  document.getElementById("teamB").value = active[1];
+
+  const citySel = document.getElementById("city");
+  citySel.appendChild(new Option("Neutral / other venue", ""));
+  MODEL.cities.forEach(c => citySel.appendChild(new Option(c, c)));
+
+  ["teamA", "teamB"].forEach(id =>
+    document.getElementById(id).addEventListener("change", syncTossOptions));
+  syncTossOptions();
+
+  document.getElementById("predictBtn").addEventListener("click", run);
+  document.getElementById("modelMeta").textContent =
+    `Trained on ${MODEL.n_matches} matches (${MODEL.trained_on}) · ` +
+    `rolling backtest accuracy ${(MODEL.test_accuracy * 100).toFixed(1)}%, ` +
+    `ROC-AUC ${MODEL.test_roc_auc.toFixed(2)}`;
+}
+
+function syncTossOptions() {
+  const a = document.getElementById("teamA").value;
+  const b = document.getElementById("teamB").value;
+  const sel = document.getElementById("tossWinner");
+  const prev = sel.value;
+  sel.innerHTML = "";
+  [a, b].forEach(t => sel.appendChild(new Option(t, t)));
+  if ([a, b].includes(prev)) sel.value = prev;
+}
+
+function buildFeatures(a, b, city, tossWinner, tossDecision) {
+  const s = MODEL.team_stats, h = MODEL.h2h_wins, homes = MODEL.team_home_cities;
+  const aWins = (h[a] && h[a][b]) || 0;
+  const bWins = (h[b] && h[b][a]) || 0;
+  const total = aWins + bWins;
+  const isHome = (t) => (homes[t] || []).includes(city) ? 1 : 0;
+  return {
+    win_rate_diff: s[a].win_rate - s[b].win_rate,
+    form_diff: s[a].form - s[b].form,
+    h2h_diff: total ? (aWins - bWins) / total : 0,
+    toss_won: tossWinner === a ? 1 : -1,
+    bats_first: ((tossWinner === a) === (tossDecision === "bat")) ? 1 : -1,
+    home_advantage: isHome(a) - isHome(b),
+  };
+}
+
+function run() {
+  const a = document.getElementById("teamA").value;
+  const b = document.getElementById("teamB").value;
+  const err = document.getElementById("error");
+  err.style.display = "none";
+  if (a === b) {
+    err.textContent = "Pick two different teams.";
+    err.style.display = "block";
+    document.getElementById("result").style.display = "none";
+    return;
+  }
+  const city = document.getElementById("city").value;
+  const tossWinner = document.getElementById("tossWinner").value;
+  const tossDecision = document.getElementById("tossDecision").value;
+
+  const f = buildFeatures(a, b, city, tossWinner, tossDecision);
+  let z = 0;
+  for (const k of MODEL.features) z += MODEL.coefficients[k] * f[k];
+  const pA = 1 / (1 + Math.exp(-z));
+
+  document.getElementById("nameA").textContent = a;
+  document.getElementById("nameB").textContent = b;
+  document.getElementById("barA").style.width = Math.max(8, pA * 100) + "%";
+  document.getElementById("barA").textContent = (pA * 100).toFixed(1) + "%";
+  document.getElementById("barB").textContent = ((1 - pA) * 100).toFixed(1) + "%";
+
+  const fav = pA >= 0.5 ? a : b;
+  const p = Math.max(pA, 1 - pA);
+  document.getElementById("verdict").innerHTML =
+    `Predicted winner: <strong>${fav}</strong> with a ${(p * 100).toFixed(1)}% win probability.`;
+
+  const body = document.getElementById("contribBody");
+  body.innerHTML = "";
+  for (const k of MODEL.features) {
+    const contrib = MODEL.coefficients[k] * f[k];
+    const tr = document.createElement("tr");
+    tr.innerHTML =
+      `<td>${FEATURE_LABELS[k] || k}</td>` +
+      `<td class="num">${f[k].toFixed(3)}</td>` +
+      `<td class="num">${MODEL.coefficients[k].toFixed(3)}</td>` +
+      `<td class="num ${contrib >= 0 ? "pos" : "neg"}">${contrib >= 0 ? "+" : ""}${contrib.toFixed(4)}</td>`;
+    body.appendChild(tr);
+  }
+  document.getElementById("result").style.display = "block";
+}
+
+init().catch(e => {
+  const err = document.getElementById("error");
+  err.textContent = "Failed to load model.json: " + e.message;
+  err.style.display = "block";
+});
+</script>
+</body>
+</html>
